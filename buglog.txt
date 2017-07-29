@@ -1,0 +1,106 @@
+MP3 BUG LOG
+
+MANGOS
+
+rsurti2
+ssaxen4
+pachgad2
+null2
+
+CP3.1
+    BUG:        Could not load a label into control registers correctly
+    SOLUTION:   Load label in directly, not dereference label with parentheses
+                Load value into temp reg and then load register into control reg
+    FIXED BY:   Rahul and Shank
+    TIME:       14hrs
+
+    BUG:        wrong flags set in IDT table
+    SOLUTION:   researched the flags in manual
+    FIXED BY:   Shawn and David
+    TIME:       14hrs
+
+
+CP3.2
+    BUG:        Indexing issues within filesystem
+    SOLUTION:   Lots of whiteboarding
+                Broke down file system into structs
+                Created helper methods for getting inodes, dentries, data blocks
+    FIXED BY:   Rahul and Shank
+    TIME:       10hrs
+
+    BUG:        RTC read would not return;
+    SOLUTION:   set a global flag to be set in rtc_int_handler
+    FIXED BY:   David
+    TIME:       2hrs
+
+    BUG:        terminal_read would not return correct values
+    SOLUTION:   created a return buffer that was exclusively used for terminal read
+    FIXED BY:   David and Shawn
+    TIME:       2hrs
+
+
+CP3.3
+    BUG:        Lots of trouble building stack for fake iret to launch user prog
+    SOLUTION:   Researched what iret requires and pushed values accordingly
+    FIXED BY:   David
+    TIME:       4hrs
+
+    BUG:        Programs were not returning the correct values after system calls
+    SOLUTION:   We were accidentally clobbering %eax in the return from syscalls.
+    FIXED BY:   David and Shawn
+    TIME:       2hrs
+
+    BUG:        We would initialize a PCB and it would get overwritten
+    SOLUTION:   We were putting very large variables on the stack and they reached the 
+                PCB.  So we stored those values elsewhere
+    FIXED BY:   David and Rahul 
+    TIME:       2hrs
+
+    BUG:        The Stack pointer we were initializing to was in the wrong page
+    SOLUTION:   decrement the pointer by one memory address
+    FIXED BY:   Shank and Rahul 
+    TIME:       2hrs
+
+
+CP3.4
+    BUG:        Mapping video memory correctly
+    SOLUTION:   Map a 4kb page from 132MB to video memory with a new page table
+    FIXED BY:   Rahul
+    TIME:       5hrs
+
+    BUG:        Ping Pong was not working
+    SOLUTION:   We were not sti();
+    FIXED BY:   David and Shawn
+    TIME:       5hrs
+
+
+CP3.5
+    BUG:        Invalid type returned for errors (ie. -1)
+    SOLUTION:   Return type was uint32_t not int32_t
+    FIXED BY:   Rahul and Shank
+    TIME:       1hr
+
+    BUG:        Scheduling
+    SOLUTION:   Return type was uint32_t not int32_t
+    FIXED BY:   David
+    TIME:       15hr
+
+    BUG:        Tab to autocomplete and shell history very sporadic
+    SOLUTION:   Index to match word was not being updated properly on backspace and multiple spaces
+    FIXED BY:   Shawn
+    TIME:       8hrs
+
+    BUG:        setting PID but if we return error later, we never free it
+    SOLUTION:   create new function in PCB
+    FIXED BY:   Rahul Shank Shawn
+    TIME:       3hrs
+
+    BUG:        the flag for terminal read which was global was being set by other scheduled processes
+    SOLUTION:   created a varibale in the pcb struct exclusively.
+    FIXED BY:   David Rahul Shawn Shank
+    TIME:       8hrs
+
+    BUG:        Switching shells when the max program number is reached creates a page fault
+    SOLUTION:   We limit switching the terminals when the max program number is reached
+    FIXED BY:   David Rahul Shawn Shank
+    TIME:       3hrs
